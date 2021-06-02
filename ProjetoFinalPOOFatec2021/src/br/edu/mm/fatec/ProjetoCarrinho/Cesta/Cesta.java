@@ -1,0 +1,62 @@
+package br.edu.mm.fatec.ProjetoCarrinho.Cesta;
+
+import br.edu.mm.fatec.ProjetoCarrinho.Models.Produto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Cesta {
+    List<Produto> itens = new ArrayList<>();
+
+
+    double SomatorioTotal = 0;
+
+    public void adicionarItem(Produto p) {
+        itens.add(p);
+    }
+
+    private double calcularTotal(){
+
+        for (Produto ProdutoAdcionavel : itens) {
+            SomatorioTotal = SomatorioTotal + (ProdutoAdcionavel.getPreco() * ProdutoAdcionavel.getQuantidade());
+        }
+        return SomatorioTotal;
+    }
+
+    public double chamarTotal(){
+        double resultado = calcularTotal();
+        return resultado;
+    }
+    public void exibirLista() {
+        for (Produto ProdutoAdcionavel : itens) {
+            System.out.println(ProdutoAdcionavel.toString());
+        }
+
+    }
+
+    public List<Produto> mandarLista() {
+        return itens;
+    }
+
+    public int acharQuantidade(String procura) {
+        for (Produto ProdutoAdcionavel : itens) {
+            if (procura == ProdutoAdcionavel.getDescricao()) {
+                return ProdutoAdcionavel.getQuantidade();
+            }
+
+        }
+        return 0;
+    }
+
+    //metodo 0 = mais || metodo 1 = menos
+    public void mudarQuantidade(String procura, int metodo) {
+        for (Produto ProdutoAdcionavel : itens) {
+            if (procura == ProdutoAdcionavel.getDescricao()) {
+                int ValorAtual = ProdutoAdcionavel.getQuantidade();
+                if (metodo == 0) ProdutoAdcionavel.setQuantidade(ValorAtual + 1);
+                if (metodo == 1) ProdutoAdcionavel.setQuantidade(ValorAtual - 1);
+            }
+        }
+
+    }
+}
