@@ -81,39 +81,48 @@ public class GerenciarProdutos {
     }
 
     private static void providerFlowManager() {
-        String razaoSocial = Util.scanString("Digte a razão social do fornecedor");
-        String cidade = Util.scanString("Digite a cidade do fornecedor");
-        String endereco = Util.scanString("Digite o endereço do fornecedor");
-        String estado = Util.scanString("Digite o estado do fornecedor");
-
-        Integer codigoContato = Util.scanInteger("Digite o código do contato para adicionar ao fornecedor");
-
         try {
-            Contato contato = findContact(codigoContato);
-            Fornecedor provider = new Fornecedor(mapIdProvider.values().size() + 1, razaoSocial, cidade, endereco, estado, contato);
-            mapIdProvider.put(provider.getCodigo(), provider);
-            System.out.println("Fornecedor foi criado!");
+            String razaoSocial = Util.scanString("Digte a razão social do fornecedor");
+            String cidade = Util.scanString("Digite a cidade do fornecedor");
+            String endereco = Util.scanString("Digite o endereço do fornecedor");
+            String estado = Util.scanString("Digite o estado do fornecedor");
+            Integer codigoContato = Util.scanInteger("Digite o código do contato para adicionar ao fornecedor");
+
+            try {
+                Contato contato = findContact(codigoContato);
+                Fornecedor provider = new Fornecedor(mapIdProvider.values().size() + 1, razaoSocial, cidade, endereco, estado, contato);
+                mapIdProvider.put(provider.getCodigo(), provider);
+                System.out.println("Fornecedor foi criado!");
+            }
+            catch(NotFoundException error) {
+                System.out.println(error.getMessage());
+            }
         }
-        catch(NotFoundException error) {
-            System.out.println(error.getMessage());
+        catch (InputMismatchException error) {
+            System.out.println("Erro: tipo de campo inválido digitado!");;
         }
+
     }
 
     private static void productFlowManager() {
-        String descricao = Util.scanString("Digite a descrição do produto");
-        Double preco = Util.scanDouble("Digite o preço do produto");
-        Integer quantidade = Util.scanInteger("Digite a quantidade do produto");
-
-        Integer codigoFornecedor = Util.scanInteger("Digite o código do fornecedor para adicionar ao produto");
 
         try {
-            Fornecedor fornecedor = findProvider(codigoFornecedor);
-            Produto product = new Produto(mapIdProduct.values().size() + 1, descricao, preco, quantidade, fornecedor);
-            mapIdProduct.put(product.getCodigo(), product);
-            System.out.println("Produto foi criado!");
+            String descricao = Util.scanString("Digite a descrição do produto");
+            Double preco = Util.scanDouble("Digite o preço do produto");
+            Integer quantidade = Util.scanInteger("Digite a quantidade do produto");
+            Integer codigoFornecedor = Util.scanInteger("Digite o código do fornecedor para adicionar ao produto");
+            try {
+                Fornecedor fornecedor = findProvider(codigoFornecedor);
+                Produto product = new Produto(mapIdProduct.values().size() + 1, descricao, preco, quantidade, fornecedor);
+                mapIdProduct.put(product.getCodigo(), product);
+                System.out.println("Produto foi criado!");
+            }
+            catch (NotFoundException error) {
+                System.out.println(error.getMessage());
+            }
         }
-        catch (NotFoundException error) {
-            System.out.println(error.getMessage());
+        catch(InputMismatchException error) {
+            System.out.println("Erro: tipo de campo inválido digitado!");;
         }
     }
 
@@ -164,35 +173,35 @@ public class GerenciarProdutos {
 
     private static Boolean flowManager(Cesta cesta) {
 
-            switch (requestOption()) {
-                case 1:
-                    contactFlowManager();
-                    break;
-                case 2:
-                    providerFlowManager();
-                    break;
-                case 3:
-                    productFlowManager();
-                    break;
-                case 4:
-                    shoppingBasketFlowManager(cesta);
-                    break;
-                case 5:
-                    showProviders();
-                    break;
-                case 6:
-                    showContacts();
-                    break;
-                case 7:
-                    showProducts();
-                    break;
-                case 8:
-                    System.out.println("Obrigado por utilizar a E-Cesta");
-                    return false;
-                default:
-                    System.out.println("Opção inválida. Digite novamente");
-                    break;
-            }
+        switch (requestOption()) {
+            case 1:
+                contactFlowManager();
+                break;
+            case 2:
+                providerFlowManager();
+                break;
+            case 3:
+                productFlowManager();
+                break;
+            case 4:
+                shoppingBasketFlowManager(cesta);
+                break;
+            case 5:
+                showProviders();
+                break;
+            case 6:
+                showContacts();
+                break;
+            case 7:
+                showProducts();
+                break;
+            case 8:
+                System.out.println("Obrigado por utilizar a E-Cesta");
+                return false;
+            default:
+                System.out.println("Opção inválida. Digite novamente");
+                break;
+        }
 
         return true;
     }
