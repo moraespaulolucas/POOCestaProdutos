@@ -1,14 +1,24 @@
 package br.edu.mm.fatec.ProjetoCarrinho.Models;
 
 public class Contato {
+    private Integer codigo;
     private String nome;
     private String telefone;
     private String email;
 
-    public Contato(String nome,String telefone,String email) {
+    public Contato(Integer codigo, String nome,String telefone,String email) {
+        setCodigo(codigo);
         setNome(nome);
         setTelefone(telefone);
         setEmail(email);
+    }
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public String getNome() {
@@ -37,7 +47,8 @@ public class Contato {
 
     @Override
     public String toString() {
-        return "Contato: " + nome + "\n" +
+        return "Codigo: " + codigo + "\n" +
+                "Contato: " + nome + "\n" +
                 "Telefone: " + telefone + "\n" +
                 "Email: " + email + "\n";
     }

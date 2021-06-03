@@ -16,6 +16,7 @@ public class Fornecedor {
         setEndereco(endereco);
         setCidade(cidade);
         setEstado(estado);
+        setContato(contato);
     }
 
     public Fornecedor(int codigo, String razaoSocial, String endereco, Contato contato) {
@@ -70,14 +71,15 @@ public class Fornecedor {
 
     @Override
     public String toString() {
-        return  "----------------------------" + "\n" +
-                "Fornecedor: " + "\n" +
-                "Codigo: " + codigo + "\n" +
-                "Razão Social: " + razaoSocial + "\n" +
-                "Endereço: " + endereco + "\n" +
-                "Cidade: " + cidade + "\n" +
-                "Estado: " + estado + "\n" +
-                contato.toString() +
-                "============================" + "\n \n";
+        return "----------------------------" + "\n" +
+                    "Fornecedor: " + "\n" +
+                    "Codigo: " + codigo + "\n" +
+                    "Razão Social: " + razaoSocial + "\n" +
+                    "Endereço: " + endereco + "\n" +
+                    "Cidade: " + cidade + "\n" +
+                    "Estado: " + estado + "\n" +
+                    "Contato: ---------------------- \n" + contato.toString() +
+                    "---------------------- \n" +
+                    "============================" + "\n \n";
     }
 }

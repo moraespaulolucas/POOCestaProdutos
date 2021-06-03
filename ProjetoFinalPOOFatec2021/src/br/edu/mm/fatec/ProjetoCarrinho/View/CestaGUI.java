@@ -36,7 +36,7 @@ public class CestaGUI {
                     }else  JOptionPane.showMessageDialog (null, Mensagem);
                 }
                 if(e.getSource()==BtnTerminar){
-                    
+
                 }
 
             }
@@ -49,8 +49,8 @@ public class CestaGUI {
         ComboProdutos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            ValorAtual = atual.acharQuantidade(ComboProdutos.getSelectedItem().toString());
-            textField1.setText(Integer.toString(ValorAtual));
+                ValorAtual = atual.acharQuantidade(ComboProdutos.getSelectedItem().toString());
+                textField1.setText(Integer.toString(ValorAtual));
             }
         });
     }
