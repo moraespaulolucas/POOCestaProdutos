@@ -1,19 +1,20 @@
 package br.edu.mm.fatec.ProjetoCarrinho.View;
 
 import br.edu.mm.fatec.ProjetoCarrinho.Cesta.Cesta;
-import br.edu.mm.fatec.ProjetoCarrinho.GerenciarProdutos;
+
 import br.edu.mm.fatec.ProjetoCarrinho.Models.Produto;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
+
 
 
 public class CestaGUI {
     private JPanel CestaTela;
+
 
     public CestaGUI(Cesta atual) {
         createTable(atual);
@@ -30,6 +31,8 @@ public class CestaGUI {
                     NumeroAtual =  Integer.parseInt(textField1.getText()) + 1;
                     textField1.setText(Integer.toString(NumeroAtual));
                     atual.mudarQuantidade(ComboProdutos.getSelectedItem().toString(), 0);
+                    createTable(atual);
+                    TotalFinalPreco.setText(String.format("Total: R$ %.2f", atual.chamarTotal()));
                 }
                 if(e.getSource()==BtnRemover){
                     if(Integer.parseInt(textField1.getText()) > 0) {
@@ -37,8 +40,18 @@ public class CestaGUI {
                         textField1.setText(Integer.toString(NumeroAtual));
                         atual.mudarQuantidade(ComboProdutos.getSelectedItem().toString(), 1);
                     }else  JOptionPane.showMessageDialog (null, Mensagem);
+                    createTable(atual);
+                    TotalFinalPreco.setText(String.format("Total: R$ %.2f", atual.chamarTotal()));
                 }
                 if(e.getSource()==BtnTerminar){
+                    JFrame formularioGUI = new JFrame();
+                    formularioGUI.setContentPane(new FormularioPagamentoGUI(atual.chamarTotal()).getPainelFormulario());
+                    formularioGUI.setSize(400,400);
+                    formularioGUI.setTitle("Finalizar - compra");
+                    formularioGUI.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                    formularioGUI.setVisible(true);
+
+
 
                 }
 
@@ -62,10 +75,20 @@ public class CestaGUI {
 
     private void createTable(Cesta cestaAtual){
 
-        TabelaProdutos.setModel(new DefaultTableModel(
+        DefaultTableModel model = new DefaultTableModel(
+
                 null,
-                new String[]{"Codigo", "Descrição", "Preço", "Quantidade",}
-        ));
+                new String[]{"Codigo", "Descrição", "Preço", "Quantidade",});
+            TabelaProdutos.setModel(model);
+            TabelaProdutos.getTableHeader().setReorderingAllowed(false);
+        for (Produto ProdutoAdcionavel : cestaAtual.mandarLista()) {
+            if(ProdutoAdcionavel.getQuantidadeTotal() > 0) {
+                String preco = String.format("%.2f",ProdutoAdcionavel.getPreco());
+                Object[] rowAtual = {ProdutoAdcionavel.getCodigo(), ProdutoAdcionavel.getDescricao(),  preco, ProdutoAdcionavel.getQuantidadeTotal()};
+                model.addRow(rowAtual);
+            }
+        }
+
     }
 
 
@@ -79,8 +102,10 @@ public class CestaGUI {
     private JButton BtnTerminar;
     private JComboBox ComboProdutos;
     private JTable TabelaProdutos;
+    private JTextField TotalFinalPreco;
     private int NumeroAtual;
     private String Mensagem = "Não há o que remover";
+    private String MensagemFinal;
 
 
 

@@ -149,7 +149,9 @@ public class GerenciarProdutos {
     }
 
     private static void shoppingBasketFlowManager(Cesta listaCesta) {
+
         JFrame cestaGUIatual = new JFrame();
+
         cestaGUIatual.setContentPane(new CestaGUI(listaCesta).getCestaTela());
         cestaGUIatual.setSize(1280, 720);
         cestaGUIatual.setTitle("Cesta - Adicionar Item");

@@ -18,21 +18,18 @@ public class Cesta {
     private double calcularTotal(){
 
         for (Produto ProdutoAdcionavel : itens) {
-            SomatorioTotal = SomatorioTotal + (ProdutoAdcionavel.getPreco() * ProdutoAdcionavel.getQuantidade());
+
+            SomatorioTotal = SomatorioTotal + (ProdutoAdcionavel.getPreco() * ProdutoAdcionavel.getQuantidadeTotal());
         }
         return SomatorioTotal;
     }
 
     public double chamarTotal(){
+        SomatorioTotal = 0;
         double resultado = calcularTotal();
         return resultado;
     }
-    public void exibirLista() {
-        for (Produto ProdutoAdcionavel : itens) {
-            System.out.println(ProdutoAdcionavel.toString());
-        }
 
-    }
 
     public List<Produto> mandarLista() {
         return itens;
