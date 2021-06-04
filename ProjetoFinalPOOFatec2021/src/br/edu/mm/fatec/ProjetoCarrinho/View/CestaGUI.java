@@ -5,15 +5,18 @@ import br.edu.mm.fatec.ProjetoCarrinho.GerenciarProdutos;
 import br.edu.mm.fatec.ProjetoCarrinho.Models.Produto;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 
 public class CestaGUI {
     private JPanel CestaTela;
 
     public CestaGUI(Cesta atual) {
-
+        createTable(atual);
 
         for (Produto produtoAtual: atual.mandarLista()){
             ComboProdutos.addItem(produtoAtual.getDescricao());
@@ -53,7 +56,18 @@ public class CestaGUI {
                 textField1.setText(Integer.toString(ValorAtual));
             }
         });
+
+
     }
+
+    private void createTable(Cesta cestaAtual){
+
+        TabelaProdutos.setModel(new DefaultTableModel(
+                null,
+                new String[]{"Codigo", "Descrição", "Preço", "Quantidade",}
+        ));
+    }
+
 
     public JPanel getCestaTela() {
         return CestaTela;
@@ -62,9 +76,9 @@ public class CestaGUI {
     private JButton BtnAdicionar;
     private JButton BtnRemover;
     private JTextField textField1;
-    private JTable TableAdicionar;
     private JButton BtnTerminar;
     private JComboBox ComboProdutos;
+    private JTable TabelaProdutos;
     private int NumeroAtual;
     private String Mensagem = "Não há o que remover";
 

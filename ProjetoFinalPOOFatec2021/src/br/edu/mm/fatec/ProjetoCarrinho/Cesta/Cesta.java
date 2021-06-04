@@ -41,7 +41,7 @@ public class Cesta {
     public int acharQuantidade(String procura) {
         for (Produto ProdutoAdcionavel : itens) {
             if (procura == ProdutoAdcionavel.getDescricao()) {
-                return ProdutoAdcionavel.getQuantidade();
+                return ProdutoAdcionavel.getQuantidadeTotal();
             }
 
         }
@@ -52,11 +52,12 @@ public class Cesta {
     public void mudarQuantidade(String procura, int metodo) {
         for (Produto ProdutoAdcionavel : itens) {
             if (procura == ProdutoAdcionavel.getDescricao()) {
-                int ValorAtual = ProdutoAdcionavel.getQuantidade();
-                if (metodo == 0) ProdutoAdcionavel.setQuantidade(ValorAtual + 1);
-                if (metodo == 1) ProdutoAdcionavel.setQuantidade(ValorAtual - 1);
+                int ValorAtual = ProdutoAdcionavel.getQuantidadeTotal();
+                if (metodo == 0) ProdutoAdcionavel.setQuantidadeTotal(ValorAtual + 1);
+                if (metodo == 1) ProdutoAdcionavel.setQuantidadeTotal(ValorAtual - 1);
             }
         }
 
     }
+
 }

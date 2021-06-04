@@ -50,6 +50,7 @@ public class GerenciarProdutos {
             showMenu();
             isProgramRunning = flowManager(cesta);
         }
+
     }
 
     private static void showMenu() {
@@ -80,6 +81,7 @@ public class GerenciarProdutos {
         System.out.println("Contato foi criado!");
     }
 
+
     private static void providerFlowManager() {
         try {
             String razaoSocial = Util.scanString("Digte a razão social do fornecedor");
@@ -104,7 +106,7 @@ public class GerenciarProdutos {
 
     }
 
-    private static void productFlowManager() {
+    private static void productFlowManager(Cesta cesta) {
 
         try {
             String descricao = Util.scanString("Digite a descrição do produto");
@@ -116,6 +118,8 @@ public class GerenciarProdutos {
                 Produto product = new Produto(mapIdProduct.values().size() + 1, descricao, preco, quantidade, fornecedor);
                 mapIdProduct.put(product.getCodigo(), product);
                 System.out.println("Produto foi criado!");
+                product.setQuantidadeTotal(0);
+                cesta.adicionarItem(product);
             }
             catch (NotFoundException error) {
                 System.out.println(error.getMessage());
@@ -145,12 +149,12 @@ public class GerenciarProdutos {
     }
 
     private static void shoppingBasketFlowManager(Cesta listaCesta) {
-        JFrame cesta = new JFrame();
-        cesta.setContentPane(new CestaGUI(listaCesta).getCestaTela());
-        cesta.setSize(500, 450);
-        cesta.setTitle("Cesta - Adicionar Item");
-        cesta.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        cesta.setVisible(true);
+        JFrame cestaGUIatual = new JFrame();
+        cestaGUIatual.setContentPane(new CestaGUI(listaCesta).getCestaTela());
+        cestaGUIatual.setSize(1280, 720);
+        cestaGUIatual.setTitle("Cesta - Adicionar Item");
+        cestaGUIatual.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        cestaGUIatual.setVisible(true);
     }
 
     private static void showProviders() {
@@ -181,7 +185,7 @@ public class GerenciarProdutos {
                 providerFlowManager();
                 break;
             case 3:
-                productFlowManager();
+                productFlowManager(cesta);
                 break;
             case 4:
                 shoppingBasketFlowManager(cesta);

@@ -6,6 +6,7 @@ public class Produto {
     private double preco;
     private int quantidade;
     private Fornecedor fornecedor;
+    private int quantidadeTotal;
 
 
 
@@ -52,6 +53,10 @@ public class Produto {
     public Fornecedor getFornecedor() { return fornecedor; }
 
     public void setFornecedor(Fornecedor fornecedor) { this.fornecedor = fornecedor;}
+
+    public int getQuantidadeTotal() { return quantidadeTotal; }
+
+    public void setQuantidadeTotal(int quantidadeTotal) { this.quantidadeTotal = quantidadeTotal; }
 
     @Override
     public String toString() {
