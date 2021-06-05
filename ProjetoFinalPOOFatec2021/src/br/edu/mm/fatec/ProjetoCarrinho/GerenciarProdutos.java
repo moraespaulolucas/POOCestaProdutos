@@ -5,9 +5,13 @@ import br.edu.mm.fatec.ProjetoCarrinho.Models.Contato;
 import br.edu.mm.fatec.ProjetoCarrinho.Models.Fornecedor;
 import br.edu.mm.fatec.ProjetoCarrinho.Models.Produto;
 import br.edu.mm.fatec.ProjetoCarrinho.Utils.Util;
+import br.edu.mm.fatec.ProjetoCarrinho.Validators.Messages.ValidatorMessage;
+import br.edu.mm.fatec.ProjetoCarrinho.Validators.Validator;
+import br.edu.mm.fatec.ProjetoCarrinho.Validators.ValidatorFornecedor;
 import br.edu.mm.fatec.ProjetoCarrinho.View.CestaGUI;
 
 import java.security.Provider;
+import java.sql.SQLOutput;
 import java.util.*;
 
 import javax.swing.*;
@@ -23,27 +27,7 @@ public class GerenciarProdutos {
         Boolean isProgramRunning = true;
         Cesta cesta = new Cesta();
 
-        /* Contato contato = new Contato("Antonio","19 99999-9999", "antoniomogifornece@yahoo.com.br");
-        Cesta ListaNova = new Cesta();
-        Fornecedor mogiMarcas = new Fornecedor(121,"Fornecedor Mogiano", "Avenida Bandeirantes, 234", contato);
 
-        Produto ervilhaSeca = new Produto(19983,"Ervilha Seca 100g ",8.00,0, mogiMarcas);
-        Produto sacoFeijao = new Produto(28872,"Feijão 1kg",20.00,0, mogiMarcas);
-        Produto sacoArroz = new Produto(37761,"Arroz 1kg",16.00,0, mogiMarcas);
-
-        ListaNova.adicionarItem(ervilhaSeca);
-        ListaNova.adicionarItem(sacoFeijao);
-        ListaNova.adicionarItem(sacoArroz);
-        ListaNova.exibirLista();
-
-
-
-        JFrame cesta = new JFrame();
-        cesta.setContentPane(new CestaGUI(ListaNova).getCestaTela());
-        cesta.setSize(500, 450);
-        cesta.setTitle("Cesta - Adicionar Item");
-        cesta.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        cesta.setVisible(true); */
 
         showWelcomeMessage();
         while(isProgramRunning) {
@@ -84,11 +68,25 @@ public class GerenciarProdutos {
 
     private static void providerFlowManager() {
         try {
+            int validar = 0;
             String razaoSocial = Util.scanString("Digte a razão social do fornecedor");
             String cidade = Util.scanString("Digite a cidade do fornecedor");
             String endereco = Util.scanString("Digite o endereço do fornecedor");
             String estado = Util.scanString("Digite o estado do fornecedor");
+            if(ValidatorFornecedor.validateStateField(estado)== false){
+                do {
+                    estado = Util.scanString();
+                }while(ValidatorFornecedor.validateStateField(estado)== false);
+                }
             Integer codigoContato = Util.scanInteger("Digite o código do contato para adicionar ao fornecedor");
+            if(Validator.validateIntegerNotNegative(codigoContato, "codigo")== false){
+                do {
+                    codigoContato = Util.scanInteger();
+                }while(Validator.validateIntegerNotNegative(codigoContato, "codigo")== false);
+            }
+
+
+
 
             try {
                 Contato contato = findContact(codigoContato);
@@ -111,8 +109,23 @@ public class GerenciarProdutos {
         try {
             String descricao = Util.scanString("Digite a descrição do produto");
             Double preco = Util.scanDouble("Digite o preço do produto");
+            if(Validator.validateIntegerNotNegativeDouble(preco, "preço")== false){
+                do {
+                    preco = Util.scanDouble();
+                }while(Validator.validateIntegerNotNegativeDouble(preco, "preço")== false);
+            }
             Integer quantidade = Util.scanInteger("Digite a quantidade do produto");
+            if(Validator.validateIntegerNotNegative(quantidade, "quantidade")== false){
+                do {
+                    quantidade = Util.scanInteger();
+                }while(Validator.validateIntegerNotNegative(quantidade, "quantidade")== false);
+            }
             Integer codigoFornecedor = Util.scanInteger("Digite o código do fornecedor para adicionar ao produto");
+            if(Validator.validateIntegerNotNegative(codigoFornecedor, "codigo")== false){
+                do {
+                    codigoFornecedor = Util.scanInteger();
+                }while(Validator.validateIntegerNotNegative(codigoFornecedor, "codigo")== false);
+            }
             try {
                 Fornecedor fornecedor = findProvider(codigoFornecedor);
                 Produto product = new Produto(mapIdProduct.values().size() + 1, descricao, preco, quantidade, fornecedor);
