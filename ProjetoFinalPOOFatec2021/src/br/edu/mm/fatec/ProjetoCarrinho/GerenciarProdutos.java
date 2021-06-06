@@ -8,6 +8,7 @@ import br.edu.mm.fatec.ProjetoCarrinho.Utils.Util;
 import br.edu.mm.fatec.ProjetoCarrinho.Validators.Messages.ValidatorMessage;
 import br.edu.mm.fatec.ProjetoCarrinho.Validators.Validator;
 import br.edu.mm.fatec.ProjetoCarrinho.Validators.ValidatorFornecedor;
+import br.edu.mm.fatec.ProjetoCarrinho.Validators.ValidatorProduto;
 import br.edu.mm.fatec.ProjetoCarrinho.View.CestaGUI;
 
 import java.security.Provider;
@@ -95,6 +96,7 @@ public class GerenciarProdutos {
                 System.out.println("Fornecedor foi criado!");
             }
             catch(NotFoundException error) {
+                System.out.println("Não foi possível criar o fornecedor");
                 System.out.println(error.getMessage());
             }
         }
@@ -109,22 +111,22 @@ public class GerenciarProdutos {
         try {
             String descricao = Util.scanString("Digite a descrição do produto");
             Double preco = Util.scanDouble("Digite o preço do produto");
-            if(Validator.validateIntegerNotNegativeDouble(preco, "preço")== false){
+            if(ValidatorProduto.validateIntegerNotNegativeDouble(preco, "preço")== false){
                 do {
                     preco = Util.scanDouble();
                 }while(Validator.validateIntegerNotNegativeDouble(preco, "preço")== false);
             }
             Integer quantidade = Util.scanInteger("Digite a quantidade do produto");
-            if(Validator.validateIntegerNotNegative(quantidade, "quantidade")== false){
+            if(ValidatorProduto.validateIntegerNotNegative(quantidade, "quantidade")== false){
                 do {
                     quantidade = Util.scanInteger();
-                }while(Validator.validateIntegerNotNegative(quantidade, "quantidade")== false);
+                }while(ValidatorProduto.validateIntegerNotNegative(quantidade, "quantidade")== false);
             }
             Integer codigoFornecedor = Util.scanInteger("Digite o código do fornecedor para adicionar ao produto");
-            if(Validator.validateIntegerNotNegative(codigoFornecedor, "codigo")== false){
+            if(ValidatorProduto.validateIntegerNotNegative(codigoFornecedor, "codigo")== false){
                 do {
                     codigoFornecedor = Util.scanInteger();
-                }while(Validator.validateIntegerNotNegative(codigoFornecedor, "codigo")== false);
+                }while(ValidatorProduto.validateIntegerNotNegative(codigoFornecedor, "codigo")== false);
             }
             try {
                 Fornecedor fornecedor = findProvider(codigoFornecedor);
@@ -135,6 +137,7 @@ public class GerenciarProdutos {
                 cesta.adicionarItem(product);
             }
             catch (NotFoundException error) {
+                System.out.println("Não foi possível criar o produto!");
                 System.out.println(error.getMessage());
             }
         }
